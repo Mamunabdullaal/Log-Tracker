@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log Tracker Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212; /* Dark background */
+      color: #ffffff; /* Light text for dark mode */
+    }
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    table {
+      width: 70%;
+      border-collapse: collapse;
+      background-color: #1e1e1e; /* Slightly lighter background for table */
+      color: #ffffff;
+      margin: 0 auto;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #ffffff;
+    }
+    th {
+      background-color: #333333;
+    }
+    td input, td select {
+      width: 100%;
+      padding: 5px;
+      background-color: #292929;
+      border: 1px solid #555555;
+      color: #ffffff;
+    }
+    td button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+    td button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Log Tracker Dashboard</h1>
+  <div class="container">
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Name</th>
+        <th>Sys ID</th>
+        <th>Log In Time</th>
+        <th>Log Out Time</th>
+        <th>Roaster Duty</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td><input type="date" id="date" required></td>
+        <td>
+          <select id="name" required>
+            <option value="Mizanur Rahman">Mizanur Rahman</option>
+            <option value="Halima Akter">Halima Akter</option>
+            <option value="Abdulla Al Mamun">Abdulla Al Mamun</option>
+            <option value="Nazmus Sakib">Nazmus Sakib</option>
+            <option value="Nazimuddoula Leon">Nazimuddoula Leon</option>
+            <option value="Sabrina Sultana Mou">Sabrina Sultana Mou</option>
+            <option value="Md Mehedi Hasan">Md Mehedi Hasan</option>
+            <option value="Aminul Islam Sovo">Aminul Islam Sovo</option>
+            <option value="Moniruzzaman">Moniruzzaman</option>
+            <option value="Md. Jobiyed Hasan Riyad">Md. Jobiyed Hasan Riyad</option>
+            <option value="Salman Hossain">Salman Hossain</option>
+          </select>
+        </td>
+        <td>
+          <select id="sysID" required>
+            <option value="Mizanuradmin">Mizanuradmin</option>
+            <option value="Halimaadmin">Halimaadmin</option>
+            <option value="Abdullaadmin">Abdullaadmin</option>
+            <option value="Nazmusadmin">Nazmusadmin</option>
+            <option value="Nazimuddoulaadmin">Nazimuddoulaadmin</option>
+            <option value="Sabrinaadmin">Sabrinaadmin</option>
+            <option value="mdmehedihasanadmin">mdmehedihasanadmin</option>
+            <option value="GenexTLaminul">GenexTLaminul</option>
+            <option value="Moniruzzamanadmin">Moniruzzamanadmin</option>
+            <option value="GenexTLJobiyer">GenexTLJobiyer</option>
+            <option value="GenexTLSalman">GenexTLSalman</option>
+          </select>
+        </td>
+        <td><input type="time" id="logInTime" required></td>
+        <td><input type="time" id="logOutTime" required></td>
+        <td>
+          <select id="roasterDuty" required>
+            <option value="9AM-6PM">9AM-6PM</option>
+            <option value="OFF">OFF</option>
+            <option value="10AM-7PM">10AM-7PM</option>
+          </select>
+        </td>
+        <td><button onclick="saveData()">Save</button></td>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    function saveData() {
+      const data = {
+        date: document.getElementById("date").value,
+        name: document.getElementById("name").value,
+        sysID: document.getElementById("sysID").value,
+        logInTime: document.getElementById("logInTime").value,
+        logOutTime: document.getElementById("logOutTime").value,
+        roasterDuty: document.getElementById("roasterDuty").value
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbz3bL0feSJkTJSnasY_CnxyCEn_tlgR5Q0jT_RtT4atPF589vE9EmP_PM7hL7rCwu99EA/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      })
+        .then(response => response.json())
+        .then(result => {
+          if (result.status === "success") {
+            alert("Data saved successfully!");
+          } else {
+            alert("Failed to save data.");
+          }
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
+    }
+  </script>
+</body>
+</html>
