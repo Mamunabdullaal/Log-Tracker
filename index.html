@@ -126,10 +126,11 @@
         roasterDuty: document.getElementById("roasterDuty").value
       };
 
-      fetch("https://script.google.com/macros/s/AKfycbx51nXLfuWqvb-Fr5VWV7Gm_1yaoNDZgjM3OxyE3GqmEjIngxpzdIiWReqZkwiPy96rHw/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbxHhrqZvF7YpF0IQV12jEId3Q0TrNroiRry7cn6ccqqNldg4X3WPq46iuKa9DCqf1VjRA/exec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        mode: 'cors' // Enabling CORS explicitly
       })
         .then(response => response.json())
         .then(result => {
