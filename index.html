@@ -66,7 +66,7 @@
         <th>Sys ID</th>
         <th>Log In Time</th>
         <th>Log Out Time</th>
-        <th>Roaster Duty</th>
+        <th>Roster Duty</th>
         <th>Action</th>
       </tr>
       <tr>
@@ -117,6 +117,7 @@
 
   <script>
     function saveData() {
+      // Collect form data
       const data = {
         date: document.getElementById("date").value,
         name: document.getElementById("name").value,
@@ -126,22 +127,29 @@
         roasterDuty: document.getElementById("roasterDuty").value
       };
 
-      fetch("https://script.google.com/macros/s/AKfycbxHhrqZvF7YpF0IQV12jEId3Q0TrNroiRry7cn6ccqqNldg4X3WPq46iuKa9DCqf1VjRA/exec", {
+      // Ensure all fields are filled
+      if (!data.date || !data.name || !data.sysID || !data.logInTime || !data.logOutTime || !data.roasterDuty) {
+        alert("Please fill in all fields before saving.");
+        return;
+      }
+
+      // Send data to the backend
+      fetch("https://script.google.com/macros/s/AKfycbwuYRkdYKTAoAZBMMroqzsjGsz-QNQKOZjGVWG_FCG7QoQltz_RmogC0ww97acSVgc7dw/exec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-        mode: 'cors' // Enabling CORS explicitly
+        body: JSON.stringify(data)
       })
         .then(response => response.json())
         .then(result => {
           if (result.status === "success") {
             alert("Data saved successfully!");
           } else {
-            alert("Failed to save data.");
+            alert("Failed to save data. " + (result.message || ""));
           }
         })
         .catch(error => {
           console.error("Error:", error);
+          alert("An error occurred while saving the data.");
         });
     }
   </script>
